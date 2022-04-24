@@ -35,8 +35,9 @@ export default function useTrackArt(track: Track | null) {
         {
           if (blob)
           {
+            uriRef.current = URL.createObjectURL(blob);
+
             if (isMounted.current) {
-              uriRef.current = URL.createObjectURL(blob);
               setUri(uriRef.current);
             }
             

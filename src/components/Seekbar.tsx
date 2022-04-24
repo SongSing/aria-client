@@ -23,7 +23,7 @@ export default function Seekbar() {
       type="range"
       min={0}
       max={currentTrack?.metadata?.length ?? 0}
-      step={currentTrack ? currentTrack.metadata.length / 100 : 1}
+      step={currentTrack ? Math.min(currentTrack.metadata.length / 100, 1) : 1}
       value={currentTime}
       onChange={e => emitGlobalEvent('seekTime', e.currentTarget.valueAsNumber)}
     />

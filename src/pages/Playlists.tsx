@@ -1,4 +1,4 @@
-import { faAngleLeft, faArrowDown, faArrowUp, faEdit, faFileArchive, faSave, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faArrowDown, faArrowUp, faEdit, faFileArchive, faSave, faTimes, faVideo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useMemo, useRef, useState } from "react";
 import PlaylistRow from "../components/PlaylistRow";
@@ -21,6 +21,7 @@ export default function Playlists() {
   useEffect(() => {
     api.get('/playlists')
       .then((res) => {
+        console.log(res);
         setState({
           playlists: res.body! as Playlist[]
         })
@@ -33,36 +34,75 @@ export default function Playlists() {
       .then((res) => {
         console.log(res);
         setState({
-          playlists: [res.body! as Playlist].concat(asyncState.playlists)
+          playlists: asyncState.playlists.concat([res.body! as Playlist])
         })
       })
     ;
   }
 
   function moveUp() {
+    if (!activePlaylist) return;
+
     if (selectedTracks.current.length === 1)
     {
-      let newTracks = activePlaylist!.tracks.map(t => t.id);
-      array_swap(
-        newTracks,
-        newTracks.indexOf(selectedTracks.current[0]),
-        mod(newTracks.indexOf(selectedTracks.current[0]) - 1, newTracks.length)
-      );
+      api.post(`/playlists/${activePlaylist.id}/tracks/${selectedTracks.current[0]}/moveUp`, {})
+        .then((res) => {
+          console.log(res);
+          setState({
+            playlists: asyncState.playlists.map((playlist, i) => {
+              if (playlist.id === activePlaylist.id) {
+                return res.body as Playlist;
+              } else {
+                return playlist;
+              }
+            })
+          })
+        })
+      ;
     }
   }
 
   function moveDown()
   {
+    if (!activePlaylist) return;
+
     if (selectedTracks.current.length === 1)
     {
-      let newTracks = activePlaylist!.tracks.map(t => t.id);
-
-      array_swap(
-        newTracks,
-        newTracks.indexOf(selectedTracks.current[0]),
-        mod(newTracks.indexOf(selectedTracks.current[0]) + 1, newTracks.length)
-      );
+      api.post(`/playlists/${activePlaylist.id}/tracks/${selectedTracks.current[0]}/moveDown`, {})
+        .then((res) => {
+          console.log(res);
+          setState({
+            playlists: asyncState.playlists.map((playlist, i) => {
+              if (playlist.id === activePlaylist.id) {
+                return res.body as Playlist;
+              } else {
+                return playlist;
+              }
+            })
+          })
+        })
+      ;
     }
+  }
+
+  function removeTrack() {
+    if (!activePlaylist) return;
+    if (selectedTracks.current.length === 0) return;
+
+    api.delete(`/playlists/${activePlaylist.id}/tracks/${selectedTracks.current.join(',')}`)
+      .then((res) => {
+        console.log(res);
+        setState({
+          playlists: asyncState.playlists.map((playlist, i) => {
+            if (playlist.id === activePlaylist.id) {
+              return res.body as Playlist;
+            } else {
+              return playlist;
+            }
+          })
+        })
+      })
+    ;
   }
 
   function exportZip()
@@ -94,6 +134,15 @@ export default function Playlists() {
       .then((res) => {
         setState(removePlaylist(activePlaylist!));
         deactivatePlaylist();
+      })
+    ;
+  }
+  
+  function makeVideos() {
+    api
+      .post(`/playlists/${activePlaylist!.id}/videos`, {})
+      .then((res) => {
+        console.log(res);
       })
     ;
   }
@@ -141,7 +190,9 @@ export default function Playlists() {
           >
             <button onClick={moveUp}><FontAwesomeIcon icon={faArrowUp} /> Move Up</button>
             <button onClick={moveDown}><FontAwesomeIcon icon={faArrowDown} /> Move Down</button>
+            <button onClick={removeTrack}><FontAwesomeIcon icon={faTimes} /> Remove Track</button>
             <button onClick={exportZip}><FontAwesomeIcon icon={faFileArchive} /> Zip</button>
+            <button onClick={makeVideos}><FontAwesomeIcon icon={faVideo} /> Make Videos</button>
           </TrackList>
         </div>
       }

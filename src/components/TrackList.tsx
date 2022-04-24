@@ -1,15 +1,18 @@
 import React, { CSSProperties, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import useSingleAndDoubleClick from "../hooks/useSingleAndDoubleClick";
-import { Track } from "../lib/types";
+import { Playlist, Track } from "../lib/types";
 import TrackItem from "./TrackItem";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { FixedSizeList as List } from "react-window";
 import { array_remove, sign } from "../lib/utils";
 import useCurrentTrack from "../hooks/useCurrentTrackSync";
-import { setQueue, setState, useGlobalState, useGlobalStateSlice } from "../state/GlobalState";
+import { setQueue, setState, upsertPlaylist, useGlobalState, useGlobalStateSlice } from "../state/GlobalState";
 import { emitGlobalEvent } from "../lib/GlobalEvents";
 import useMemoSync from "../hooks/useMemoSync";
 import useCurrentTrackAsync from "../hooks/useCurrentTrackAsync";
+import { Item, Menu, Submenu, useContextMenu } from "react-contexify";
+import useApi from "../hooks/useApi";
+import 'react-contexify/dist/ReactContexify.css';
 
 type SortType = "none" | "artist" | "album" | "title" | "modified";
 type SortDirection = "ascending" | "descending";
@@ -28,9 +31,16 @@ interface Props
   // trackMenus?: CustomMenuItem[];
 }
 
+const MENU_ID = 'TrackList';
+
 export default function TrackList(props: React.PropsWithChildren<Props>)
 {
-  const { asyncState, syncState } = useGlobalStateSlice('tracks', 'currentTrackId');
+  const { show } = useContextMenu({
+    id: MENU_ID,
+  });
+
+  const { asyncState, syncState } = useGlobalStateSlice('tracks', 'currentTrackId', 'playlists');
+  const api = useApi();
 
   const click = useSingleAndDoubleClick(handleClick, handleDoubleClick);
   const clickedTrackId = useRef<string | null>(null);
@@ -181,11 +191,17 @@ export default function TrackList(props: React.PropsWithChildren<Props>)
 
   function handleContextMenu(e: React.MouseEvent)
   {
-    // e.preventDefault();
-    // const id = (e.target as HTMLDivElement)?.dataset?.id ?? null;
-    // if (id === null) return;
+    e.preventDefault();
+    const id = (e.target as HTMLDivElement)?.dataset?.id ?? null;
+    if (id === null) return;
 
-    // const newSelected = performClick(id, e.ctrlKey, e.shiftKey, true);
+    const newSelected = performClick(id, e.ctrlKey, e.shiftKey, true);
+    
+    show(e, {
+      props: {
+        trackIds: newSelected
+      }
+    });
 
     // showContextMenu([
     //   {
@@ -270,8 +286,32 @@ export default function TrackList(props: React.PropsWithChildren<Props>)
     }
   }
 
+  function addToPlaylist(playlistId: string, trackIds: string[])
+  {
+    api
+      .post(`/playlists/${playlistId}/tracks`, {
+        tracks: trackIds
+      })
+      .then((res) => {
+        console.log(res);
+        setState(upsertPlaylist(res.body as Playlist));
+      })
+    ;
+  }
+
+  function consolidateModifiedTimes(trackIds: string[])
+  {
+    api
+      .post(`/tracks/consolidateModified`, {
+        trackIds
+      })
+      .then(({ status, body }) => {
+        setState({ tracks: { ...asyncState.tracks, ...body?.tracks }});
+      })
+    ;
+  }
+
   const track: (args: {data: typeof trackItemData, index: number, style: CSSProperties}) => any = useCallback(({ data, index, style }) => {
-    console.log(index);
     return (
       <TrackItem
         index={index}
@@ -345,5 +385,14 @@ export default function TrackList(props: React.PropsWithChildren<Props>)
         )}
       </AutoSizer>
     </div>
+
+    <Menu id={MENU_ID}>
+      <Submenu label="Add to playlist">
+        {asyncState.playlists.map((playlist) => (
+          <Item onClick={({ props }) => addToPlaylist(playlist.id, props.trackIds)}>{playlist.name}</Item>
+        ))}
+      </Submenu>
+      <Item onClick={({ props }) => consolidateModifiedTimes(props.trackIds)}>Consolidate modified times</Item>
+    </Menu>
   </div>);
 }

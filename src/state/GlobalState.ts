@@ -219,7 +219,7 @@ export const upsertPlaylist = (playlist: Playlist): SetFn<AppState> => {
     return {
       ...state,
       playlists: state.playlists.some(p => p.id === playlist.id) ?
-        state.playlists.map(p => p.id === playlist.id ? playlist : p) :
+        state.playlists.map(p => p.id === playlist.id ? { ...p, ...playlist } : p) :
         state.playlists.concat([playlist])
     }
   };

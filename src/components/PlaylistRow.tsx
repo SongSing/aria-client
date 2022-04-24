@@ -20,7 +20,7 @@ export default function PlaylistRow(props: Props) {
           {props.playlist.name}
         </div>
         <div>
-          {props.playlist.tracks.length} tracks, {Math.round(props.playlist.totalLength / 60 / 60 * 10) / 10} hours
+          {props.playlist.tracks.length} tracks, {Math.round((props.playlist.totalLength || 0) / 60 / 60 * 10) / 10} hours
         </div>
       </div>
     </button>

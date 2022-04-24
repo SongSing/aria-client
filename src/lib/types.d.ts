@@ -3,6 +3,7 @@ export interface Track
     id: string;
     metadata: TrackMetadata;
     settings: TrackSettings;
+    listenEntries?: ListenEntry[];
 }
 
 export interface ListenEntry
@@ -35,12 +36,4 @@ export interface Playlist
 export interface TrackSettings
 {
     volume: number; // multiplier
-}
-
-export interface Playlist
-{
-    version: 1;
-    tracks: string[]; // ids
-    filename: string;
-    name: string;
 }

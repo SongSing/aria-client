@@ -140,7 +140,6 @@ export default function Player() {
   }
 
   useEffect(() => {
-    console.log(navigator);
     if ('mediaSession' in navigator) {
       navigator.mediaSession.setActionHandler('previoustrack', performPreviousOrRestart);
       navigator.mediaSession.setActionHandler('nexttrack', performNext);

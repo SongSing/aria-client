@@ -1,240 +1,255 @@
 *
 {
-    font-family: Arial, Helvetica, sans-serif;
-    box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
 }
 
 $background-color: #112;
 
 html, body, #root, .app, .background, .background-image
 {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    color: white;
-    background-color: #112;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  color: white;
+  background-color: #112;
 }
 
 input[type=range] {
-    -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
-    background: transparent; /* Otherwise white in Chrome */
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  background: transparent; /* Otherwise white in Chrome */
 
-    &::-webkit-slider-thumb {
-        -webkit-appearance: none;
-    }
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+  }
+  
+  &:focus {
+  }
+  
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: 0;
+    border-radius: 100%;
+    width: 16px;
+    height: 16px;
+    margin-top: -4px;
+    background-color: rgba(200,200,200);
+  }
+  
+  &::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    border-radius: 100px;
+    background-color: rgba(255,255,255,0.3);
+  }
     
-    &:focus {
-    }
-    
-    &::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        border: 0;
-        border-radius: 100%;
-        width: 16px;
-        height: 16px;
-        margin-top: -4px;
-        background-color: rgba(200,200,200);
-    }
-    
+  &:hover {
     &::-webkit-slider-runnable-track {
-        width: 100%;
-        height: 8px;
-        border-radius: 100px;
-        background-color: rgba(255,255,255,0.3);
-    }
-      
-    &:hover {
-        &::-webkit-slider-runnable-track {
-            background-color: rgba(255,255,255,0.45);
-        }
-
-        &::-webkit-slider-thumb {
-            background-color: rgba(240,240,240,1);
-        }
+      background-color: rgba(255,255,255,0.45);
     }
 
-    &:focus::-webkit-slider-runnable-track {
+    &::-webkit-slider-thumb {
+      background-color: rgba(240,240,240,1);
     }
+  }
+
+  &:focus::-webkit-slider-runnable-track {
+  }
+}
+
+.chartTooltip
+{
+  border: 1px solid #aaa;
+  background-color: rgba(0,0,0,0.9);
+  padding: 0.5rem;
+  display: flexbox;
+  flex-direction: column;
+
+  & > div
+  {
+    display: flexbox;
+    flex-direction: row;
+  }
 }
 
 .rem1-5
 {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 $nav-height: 54px;
 
 .app
 {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
 
-    & > * {
-        position: relative;
-    }
+  & > * {
+    position: relative;
+  }
 }
 
 .background-image
 {
-    position: absolute;
-    
-    object-position: center;
-    object-fit: cover;
+  position: absolute;
+  
+  object-position: center;
+  object-fit: cover;
 }
 
 .background
 {
-    position: absolute;
-    
-    background-position: center;
-    background-size: cover;
-    background-blend-mode: overlay;
+  position: absolute;
+  
+  background-position: center;
+  background-size: cover;
+  background-blend-mode: overlay;
 }
 
 .clicky
 {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 nav
 {
-    border-bottom: 1px dotted rgba(255,255,255,0.2);
-    font-size: 32px;
-    height: $nav-height;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0 16px;
-    overflow-x: auto;
+  border-bottom: 1px dotted rgba(255,255,255,0.2);
+  font-size: 32px;
+  height: $nav-height;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 16px;
+  overflow-x: auto;
 
-    a
+  a
+  {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    margin-right: 12px;
+    cursor: pointer;
+
+    &.active
     {
-        color: rgba(255,255,255,0.6);
-        text-decoration: none;
-        margin-right: 12px;
-        cursor: pointer;
-
-        &.active
-        {
-            color: white;
-        }
-
-        &:hover:not(.active)
-        {
-            color: rgba(255,255,255,0.8);
-        }
+      color: white;
     }
+
+    &:hover:not(.active)
+    {
+      color: rgba(255,255,255,0.8);
+    }
+  }
 }
 
 .view
 {
-    position: relative;
-    width: 100%;
-    overflow-y: auto;
-    padding: 8px 16px;
-    flex-grow: 1;
+  position: relative;
+  width: 100%;
+  overflow-y: auto;
+  padding: 8px 16px;
+  flex-grow: 1;
 }
 
 .stats
 {
-    padding: 0;
-    font-size: 1.5rem;
+  padding: 0;
+  font-size: 1.5rem;
+  display: flex;
+  flex-direction: column;
+
+  .mainRow
+  {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    overflow-x: auto;
+    flex-shrink: 0;
+    padding: 0.75rem 1.25rem;
+  }
+
+  .summaries
+  {
+    position: relative;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    padding: 0.75rem 1.25rem;
+    padding-top: 0;
+  }
+  
+  .big
+  {
+    font-size: 3rem;
+    margin-right: 0.25rem;
+  }
+  
+  .med
+  {
+    font-size: 1.25em;
+    margin-right: 0.25rem;
+  }
 
-    .mainRow
-    {
-        display: flex;
-        flex-direction: row;
-        gap: 1.5rem;
-        overflow-x: auto;
-        flex-shrink: 0;
-        padding: 0.75rem 1.25rem;
-    }
+  .sub
+  {
+    color: rgba(255,255,255,0.8);
+    word-break: keep-all;
+    white-space: nowrap;
+  }
 
-    .summaries
-    {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        overflow-y: auto;
-        padding: 0.75rem 1.25rem;
-        padding-top: 0;
-    }
-    
-    .big
-    {
-        font-size: 3rem;
-        margin-right: 0.25rem;
-    }
-    
-    .med
-    {
-        font-size: 1.25em;
-        margin-right: 0.25rem;
-    }
+  .recentList
+  {
+    margin: 0;
+    padding: 0;
+    font-size: 1.25rem;
 
-    .sub
+    li
     {
+      padding: 0;
+      margin: 0;
+      margin-bottom: 0.4em;
+      padding-bottom: 0.4em;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      flex-direction: row;
+      gap: 1em;
+      align-items: center;
+
+      .number
+      {
+        text-align: right;
+        width: 1.25em;
         color: rgba(255,255,255,0.8);
-        word-break: keep-all;
-        white-space: nowrap;
+      }
+
+      img
+      {
+        height: 3em;
+        border-radius: 100%;
+      }
     }
-
-    .recentList
-    {
-        margin: 0;
-        padding: 0;
-        font-size: 1.25rem;
-
-        li
-        {
-            padding: 0;
-            margin: 0;
-            margin-bottom: 0.4em;
-            padding-bottom: 0.4em;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            flex-direction: row;
-            gap: 1em;
-            align-items: center;
-
-            .number
-            {
-                text-align: right;
-                width: 1.25em;
-                color: rgba(255,255,255,0.8);
-            }
-
-            img
-            {
-                height: 3em;
-                border-radius: 100%;
-            }
-        }
-    }
+  }
 }
 
 h2
 {
-    font-weight: normal;
-    margin: 0.5em 0;
-    margin-bottom: 0.4em;
-    padding: 0;
+  font-weight: normal;
+  margin: 0.5em 0;
+  margin-bottom: 0.4em;
+  padding: 0;
 
-    &:first-child
-    {
-        margin-top: 0;
-    }
+  &:first-child
+  {
+    margin-top: 0;
+  }
 
-    &:last-child
-    {
-        margin-bottom: 0;
-    }
+  &:last-child
+  {
+    margin-bottom: 0;
+  }
 }
 
 .glassy
@@ -244,397 +259,575 @@ h2
 
 .tracks
 {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .playlistList
 {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .playlistRow
+  {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    min-width: 0;
 
-    .playlistRow
-    {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 1rem;
-        min-width: 0;
-
-        div {
-            flex-shrink: 0;
-        }
-
-        .details {
-            min-width: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            gap: 0.5rem;
-            flex-shrink: 1;
-
-            & > * {
-                text-overflow: ellipsis;
-                overflow: hidden;
-                white-space: nowrap;
-                text-align: left;
-            }
-
-            & > :first-child {
-                font-size: 1.5rem;
-            }
-
-            & > :last-child {
-                font-size: 1rem;
-                color: rgba(255,255,255,0.8);
-            }
-        }
+    div {
+      flex-shrink: 0;
     }
+
+    .details {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.5rem;
+      flex-shrink: 1;
+
+      & > * {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        text-align: left;
+      }
+
+      & > :first-child {
+        font-size: 1.5rem;
+      }
+
+      & > :last-child {
+        font-size: 1rem;
+        color: rgba(255,255,255,0.8);
+      }
+    }
+  }
 }
 
 button.delete
 {
-    background-color: #9c2020;
+  background-color: #9c2020;
 
-    &:hover
-    {
-        background-color: lighten(#9c2020, 7);
-    }
+  &:hover
+  {
+    background-color: lighten(#9c2020, 7);
+  }
 
-    &:active
-    {
-        background-color: darken(#9c2020, 7);
-    }
+  &:active
+  {
+    background-color: darken(#9c2020, 7);
+  }
 }
 
 .playlists
 {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  .titleRow
+  {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 1rem;
+    gap: 1rem;
+
+    input
+    {
+      margin: 0.75rem 0rem;
+      font-size: 2rem;
+    }
+  }
+
+  .playlistHeader {
+    padding: 0;
+    margin: 0.5rem 0;
+    font-weight: normal;
+  }
+
+  .playlistContainer
+  {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
     gap: 0;
 
-    .titleRow
-    {
-        margin-top: 0.5rem;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        padding-left: 1rem;
-        gap: 1rem;
-
-        input
-        {
-            margin: 0.75rem 0rem;
-            font-size: 2rem;
-        }
+    .tracklist-container {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
     }
-
-    .playlistHeader {
-        padding: 0;
-        margin: 0.5rem 0;
-        font-weight: normal;
-    }
-
-    .playlistContainer
-    {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-        gap: 0;
-
-        .tracklist-container {
-            box-sizing: border-box;
-            padding: 0;
-            margin: 0;
-        }
-    }
+  }
 }
 
 .albumlist-container
 {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    overflow-x: hidden;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-x: hidden;
 
-    .albumlist
-    {
-        overflow-x: hidden;
-    }
+  .albumlist
+  {
+    overflow-x: hidden;
+  }
 }
 
 .tracklist-component
 {
-    padding: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  .tracktop
+  {
+    background-color: rgba(0,0,0,0.0);
+    padding: 0.5rem 0.5rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-grow: 0;
+    gap: 0.5rem;
+
+    & > .group
+    {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .label
+    {
+      margin-left: 0.5rem;
+    }
+
+    .hamburger
+    {
+      color: white;
+      margin-left: auto;
+      cursor: pointer;
+    }
+  }
+
+  .tracklist-container
+  {
+    overflow-y: auto;
+    overflow-x: hidden;
     flex-grow: 1;
-
-    .tracktop
-    {
-        background-color: rgba(0,0,0,0.0);
-        padding: 0.5rem 0.5rem;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        flex-wrap: wrap;
-        flex-grow: 0;
-        gap: 0.5rem;
-
-        & > .group
-        {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .label
-        {
-            margin-left: 0.5rem;
-        }
-
-        .hamburger
-        {
-            color: white;
-            margin-left: auto;
-            cursor: pointer;
-        }
-    }
-
-    .tracklist-container
-    {
-        overflow-y: auto;
-        overflow-x: hidden;
-        flex-grow: 1;
-    }
+  }
 }
 
 .albums
 {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  padding-top: 1rem;
+  
+  .albumItem
+  {
+    width: 160px;
     display: flex;
     flex-direction: column;
-    padding: 0;
-    padding-top: 1rem;
-    
-    .albumItem
+    align-items: center;
+    margin-bottom: 16px;
+    margin-right: 16px;
+
+    img
     {
-        width: 160px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 16px;
-        margin-right: 16px;
-
-        img
-        {
-            width: 128px;
-            height: 128px;
-            margin-bottom: 0.5rem;
-        }
-
-        .title
-        {
-            text-align: center;
-        }
+      width: 128px;
+      height: 128px;
+      margin-bottom: 0.5rem;
     }
+
+    .title
+    {
+      text-align: center;
+    }
+  }
 }
 
 $trackItemHeight: 64px;
 .trackItem
 {
+  display: flex;
+  flex-direction: row;
+  height: $trackItemHeight;
+  font-size: 18px;
+  cursor: default;
+  user-select: none;
+
+  background-color: rgba(20,20,20,0.0);
+
+  *
+  {
+    pointer-events: none;
+  }
+
+  &.odd
+  {
+    background-color: rgba(0,0,0,0.0);
+  }
+
+  &.selected
+  {
+    background-color: rgba(255,255,255,0.15);
+    color: white;
+  }
+
+  &.playing
+  {
+    font-weight: bold;
+
+    @keyframes backgroundColorPalette {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+      }
+
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.3));
+      background-size: 200% 100%;
+
+      animation-name: backgroundColorPalette;
+      animation-duration: 5s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: linear;
+  }
+
+  .thumb
+  {
+    height: 100%;
+    width: $trackItemHeight;
+    object-fit: cover;
+  }
+
+  .rows
+  {
     display: flex;
-    flex-direction: row;
-    height: $trackItemHeight;
-    font-size: 18px;
-    cursor: default;
-    user-select: none;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
 
-    background-color: rgba(20,20,20,0.0);
-
-    *
+    .title
     {
-        pointer-events: none;
+      margin-bottom: 6px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
 
-    &.odd
+    .bottomRow
     {
-        background-color: rgba(0,0,0,0.0);
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;   
     }
-
-    &.selected
-    {
-        background-color: rgba(255,255,255,0.15);
-        color: white;
-    }
-
-    &.playing
-    {
-        font-weight: bold;
-
-        @keyframes backgroundColorPalette {
-            0%{background-position:0% 50%}
-            50%{background-position:100% 50%}
-            100%{background-position:0% 50%}
-          }
-
-          background: linear-gradient(to right, transparent, rgba(255,255,255,0.3));
-          background-size: 200% 100%;
-
-          animation-name: backgroundColorPalette;
-          animation-duration: 5s;
-          animation-iteration-count: infinite;
-          animation-direction: alternate;
-          animation-timing-function: linear;
-    }
-
-    .thumb
-    {
-        height: 100%;
-        width: $trackItemHeight;
-        object-fit: cover;
-    }
-
-    .rows
-    {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        min-width: 0;
-        padding-right: 0.75rem;
-        padding-left: 0.75rem;
-
-        .title
-        {
-            margin-bottom: 6px;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        .bottomRow
-        {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;   
-        }
-    }
+  }
 }
 
 .settings
 {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+
+  & > *
+  {
+    margin-bottom: 0.5rem;
+  }
+
+  .row
+  {
+    margin-bottom: 0.5rem;
     display: flex;
+    flex-direction: row;
     align-items: stretch;
-    flex-direction: column;
+    gap: 0.5rem;
 
-    & > *
+    input
     {
-        margin-bottom: 0.5rem;
+      flex-grow: 1;
     }
-
-    .row
-    {
-        margin-bottom: 0.5rem;
-        display: flex;
-        flex-direction: row;
-        align-items: stretch;
-        gap: 0.5rem;
-
-        input
-        {
-            flex-grow: 1;
-        }
-    }
+  }
 }
 
 input[type=text], input[type=number], select
 {
-    font-size: 1em;
-    background-color: rgba(255,255,255,0.1);
-    color: white;
-    border: 0;
-    border-bottom: 1px solid #aaa;
-    padding: 4px 0.5rem;
+  font-size: 1em;
+  background-color: rgba(255,255,255,0.1);
+  color: white;
+  border: 0;
+  border-bottom: 1px solid #aaa;
+  padding: 4px 0.5rem;
 
-    &:hover
-    {
-        background-color: rgba(255,255,255,0.3);
-    }
+  &:hover
+  {
+    background-color: rgba(255,255,255,0.3);
+  }
 
-    & > option
-    {
-        background-color: black;
-    }
+  & > option
+  {
+    background-color: black;
+  }
 }
 
 select
 {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 input[type="range"]
 {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 button:not(.nostyle)
 {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
-    border: 0px solid #555;
-    font-size: 1em;
-    cursor: pointer;
-    padding: 0.5rem;
-    display: flex;
-    flex-direction: row;
-    gap: 0.25em;
-    align-items: center;
-    justify-content: center;
+  background-color: rgba(255,255,255,0.1);
+  color: white;
+  border: 0px solid #555;
+  font-size: 1em;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.25em;
+  align-items: center;
+  justify-content: center;
 
-    &:hover
-    {
-        background-color: rgba(255,255,255,0.2);
-    }
+  &:hover
+  {
+    background-color: rgba(255,255,255,0.2);
+  }
 
-    &:active
-    {
-        background-color: #222;
-    }
+  &:active
+  {
+    background-color: #222;
+  }
 }
 
 button.nostyle
 {
-    color: white;
+  color: white;
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+  font-size: 1em;
+  cursor: pointer;
+
+  &:hover
+  {
     background-color: transparent;
-    border: 0;
-    padding: 0;
-    font-size: 1em;
-    cursor: pointer;
+  }
 
-    &:hover
-    {
-        background-color: transparent;
-    }
-
-    &:active
-    {
-        background-color: transparent;
-    }
+  &:active
+  {
+    background-color: transparent;
+  }
 }
 
 .home
 {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
 }
 
 .nowPlaying
 {
-    border-top: 1px dotted rgba(255,255,255,0.2);
+  border-top: 1px dotted rgba(255,255,255,0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  align-items: stretch;
+  
+  transition: height 1s;
+
+  .mainWrapper
+  {
+
+    display: grid;
+
+    grid-template-columns: minmax(0, 0.5fr) auto 0.25fr 0.25fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "info controls seeker etc"
+    ;
+
+    gap: 1rem;
+    align-items: center;
+    justify-content: stretch;
+
+    .info
+    {
+      grid-area: info;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      flex-grow: 0;
+
+      .primary
+      {
+        font-size: 1.5rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100%;
+      }
+  
+      .secondary
+      {
+        color: rgba(255,255,255,0.8);
+        font-style: italic;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      
+      @media screen and (max-width: 1280px) {
+        flex-direction: row;
+        width: auto;
+        align-items: baseline;
+        justify-content: flex-start;
+
+        .primary {
+          width: auto;
+          margin-right: 0.5rem;
+        }
+
+        .secondary {
+          flex-grow: 1;
+        }
+      }
+      
+      @media screen and (max-width: 680px) {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+
+        .primary {
+          width: 100%;
+        }
+
+        .secondary {
+          width: 100%;
+        }
+      }
+    }
+  
+    .controls
+    {
+      grid-area: controls;
+      font-size: 1.5rem;
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .seekGroup
+    {
+      grid-area: seeker;
+      
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .etc
+    {
+      grid-area: etc;
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+
+      .volumeRow
+      {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+        align-items: center;
+        flex-grow: 1;
+  
+        input {
+          flex-grow: 1;
+        }
+      }
+    }
+
+    audio
+    {
+      flex-grow: 1;
+    }
+
+    .bars
+    {
+      cursor: pointer;
+    }
+
+    .shuffle
+    {
+      color: rgba(255,255,255,0.5);
+      cursor: pointer;
+
+      &.active
+      {
+      color: white;
+      }
+    }
+
+    @media screen and (max-width: 1280px) {
+      display: grid;
+  
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-rows: auto auto;
+      grid-template-areas:
+        "info controls"
+        "seeker etc"
+      ;
+
+      & > * {
+        justify-content: center;
+      }
+    }
+    
+    @media screen and (max-width: 680px) {
+      display: grid;
+  
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-rows: auto auto;
+      grid-template-areas:
+        "info controls"
+        "seeker seeker"
+        "etc etc"
+      ;
+
+      .controls {
+        font-size: 2rem;
+      }
+    }
+  }
 }

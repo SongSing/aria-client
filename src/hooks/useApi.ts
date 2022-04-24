@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { http } from '@tauri-apps/api';
 import useFetch from "./useFetch";
 
-const baseUrl = 'http://10.0.0.22:9005';
+const baseUrl = 'http://10.0.0.33:9005';
 
 function transformUrl(url: string) {
   if (url.startsWith(baseUrl)) {

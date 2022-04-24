@@ -377,6 +377,19 @@ export function array_last<T>(array : T[]) : T
     return array[array.length - 1];
 }
 
+// so like array_item_instance([5, 6, 5, 6], 2) would be 2 since that's the second instance of 5
+export function array_item_instance(array: any[], index: number): number
+{
+    let ret = 1;
+
+    for (let i = 0; i < index; i++)
+    {
+        ret += +(array[i] === array[index]);
+    }
+
+    return ret;
+}
+
 export function array_swap<T>(array : T[], a : number | T, b : number | T) : void
 {
     if (typeof(a) !== "number")

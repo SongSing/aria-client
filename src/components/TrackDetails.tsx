@@ -5,6 +5,7 @@ import { LabelRow, Row } from "../lib/StyledComponents";
 import NumberInput from "./NumberInput";
 import { setState, setTrack, useGlobalStateSlice } from "../state/GlobalState";
 import useApi from "../hooks/useApi";
+import TrackChart from "./TrackChart";
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,7 +34,7 @@ export default function TrackDetails(props: Props)
         setPlays(Math.round(res.body?.totalPlays ?? -1))
       })
     ;
-  }, [track]);
+  }, [track.id]);
 
   function handleVolumeChange(volume: number)
   {
@@ -49,9 +50,6 @@ export default function TrackDetails(props: Props)
   return (
     <Wrapper>
       {track ? <>
-        <div className="title">Title: {track.metadata.title}</div>
-        <div className="artist">Artist: {track.metadata.artist}</div>
-        <div className="album">Album: {track.metadata.album}</div>
         <LabelRow>
           <span>Volume Modifier:</span>
           <input
@@ -70,9 +68,10 @@ export default function TrackDetails(props: Props)
             onChange={handleVolumeChange}
             roundPlaces={1}
           />
+          <div>Plays: {plays === null ? 'Loading...' : plays}</div>
         </LabelRow>
-        <Row>
-          Plays: {plays === null ? 'Loading...' : plays}
+        <Row style={{ alignSelf: "stretch" }}>
+          <TrackChart trackId={props.trackId} />
         </Row>
       </> : <span>No track selected</span>}
     </Wrapper>
