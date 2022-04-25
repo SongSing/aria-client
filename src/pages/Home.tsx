@@ -11,10 +11,20 @@ export default function Home() {
     api.post('/createThumbnails', {});
   }
 
+  function createTransferFile() {
+    api.post('/createTransferFile', {});
+  }
+
+  function readFromTransferFile() {
+    api.post('/readFromTransferFile', {});
+  }
+
   return (
     <div className="view home">
       <button onClick={refresh}>Refresh Library</button>
       <button onClick={createThumbnails}>Create Thumbnails</button>
+      <button onClick={createTransferFile}>Create Transfer File</button>
+      <button onClick={readFromTransferFile}>Read from Transfer File</button>
     </div>
   );
 }
